@@ -115,7 +115,7 @@ assigning owners (per the team's planning email):
 | Section | Owner | Status |
 |---|---|---|
 | Dataset Overview | Feifei | ✅ Complete |
-| Data Preparation | Derrick | 🔄 Needs update |
+| Data Preparation | Derrick | ✅ Complete |
 | EDA Results | Derrick | 🔄 Needs update |
 | Modeling | Sem | 🔄 Needs update |
 | Evaluation Metrics | Sem | 🔄 Needs update |
