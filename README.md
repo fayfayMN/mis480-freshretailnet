@@ -100,7 +100,7 @@ Notebooks (run in order): **01** inspect → **02** subset → **03** EDA → **
   promo/holiday/discount + lagged weather/stockout); baseline vs. linear vs. Random Forest;
   `log1p` target transform; `max_depth` tuning; **95% prediction intervals** (~95% coverage).
 - **Evaluation:** validated on the dataset's **official eval split** (true next 7 days).
-- **Classification (Week 12):** a "high- vs low-demand day" demo — logistic regression and a
+- **Classification :** a "high- vs low-demand day" demo — logistic regression and a
   Random Forest classifier reach ~0.79 accuracy, ROC-AUC ~0.87.
 
 Charts: `Data Prep - Derrick/outputs/eda/` and `.../outputs/models/`.
