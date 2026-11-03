@@ -1,0 +1,18 @@
+# Raw dataset — large / licensed; download from Hugging Face instead (see README)
+Data/FreshRetailNet-50k/*.parquet
+
+# Backups and scratch
+*.bak
+**/.ipynb_checkpoints/
+**/__pycache__/
+.DS_Store
+**/.DS_Store
+
+# OS / editor cruft
+Thumbs.db
+.vscode/
+
+# Keep the small derived subset (data/subset/) and the output charts — they are NOT ignored.
+# To also exclude the rendered notebook HTML, uncomment the next line:
+# **/*.html
+Data/FreshRetailNet.html

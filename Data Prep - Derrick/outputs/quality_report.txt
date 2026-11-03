@@ -1,0 +1,30 @@
+rows: 9000
+series: 100
+duplicates: 0
+days per series min/max: 90/90
+dates: 2024-03-28 to 2024-06-25
+missing values:
+  city_id: 0
+  store_id: 0
+  management_group_id: 0
+  first_category_id: 0
+  second_category_id: 0
+  third_category_id: 0
+  product_id: 0
+  dt: 0
+  sale_amount: 0
+  stock_hour6_22_cnt: 0
+  discount: 0
+  holiday_flag: 0
+  activity_flag: 0
+  precpt: 0
+  avg_temperature: 0
+  avg_humidity: 0
+  avg_wind_level: 0
+sale_amount min/mean/max: 0.00/1.22/25.80
+discount min/max: 0.44/1.00
+rows with a discount: 4863
+holiday rows: 3100  promo rows: 3577
+rows with a stockout: 3953 (43.9%)
+est_demand mean 1.81 vs observed sale_amount mean 1.22
+days out of stock all business hours (est_demand blank): 370

@@ -1,0 +1,22 @@
+variable,description
+city_id,"city, encoded"
+store_id,"store, encoded"
+management_group_id,"store management group, encoded"
+first_category_id,top product category
+second_category_id,mid product category
+third_category_id,detailed product category
+product_id,"product, encoded"
+dt,date of the daily record
+sale_amount,"daily sales, normalized (not units or revenue) - target"
+hours_sale,24 hourly normalized sales values
+stock_hour6_22_cnt,out-of-stock hours during business hours (6-22)
+hours_stock_status,"24 hourly flags, 1 = out of stock"
+discount,"price ratio, 1.0 = no discount"
+holiday_flag,1 if holiday
+activity_flag,1 if a promo is running
+precpt,precipitation
+avg_temperature,average temperature
+avg_humidity,average humidity
+avg_wind_level,average wind
+availability,share of business hours (6-22) in stock = (16 - stock_hour6_22_cnt)/16
+est_demand,stockout-adjusted demand = sale_amount / availability; blank if out of stock all day
