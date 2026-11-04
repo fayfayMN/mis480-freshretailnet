@@ -67,7 +67,10 @@ MIS480-50 Group Project/
 │   ├── scripts/                       # 01_inspect · 02_subset · 03_eda (.py)
 │   ├── data/subset/                   # derived 100-series working subset (CSV + parquet)
 │   └── outputs/                       # data_dictionary, quality_report, charts (eda/, models/)
-└── Analysis/Feifei Notebooks/         # modeling & analysis
+└── Analysis/                          # Modleing & analysis
+    ├── Feifei Notebooks/
+    └── Sem Masgina/
+
 
 ```
 
