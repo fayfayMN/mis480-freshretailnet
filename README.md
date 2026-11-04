@@ -29,8 +29,7 @@ regression or a shallow `log1p` Random Forest) generalizes best.
 | linear regression | 0.488 | **0.748** |
 | random forest (`log1p`) | 0.477 | 0.796 |
 
-See [`Analysis/Feifei Notebooks/CRISP-DM_Summary.md`](Analysis/Feifei%20Notebooks/CRISP-DM_Summary.md)
-for the full one-page write-up.
+
 
 ---
 
@@ -69,8 +68,7 @@ MIS480-50 Group Project/
 │   ├── data/subset/                   # derived 100-series working subset (CSV + parquet)
 │   └── outputs/                       # data_dictionary, quality_report, charts (eda/, models/)
 └── Analysis/Feifei Notebooks/         # modeling & analysis
-    ├── 01_inspect … 05_classification (.ipynb + .html)
-    └── CRISP-DM_Summary.md / .docx
+
 ```
 
 Notebooks (run in order): **01** inspect → **02** subset → **03** EDA → **04** modeling →
@@ -116,7 +114,7 @@ assigning owners (per the team's planning email):
 |---|---|---|
 | Dataset Overview | Feifei | ✅ Complete |
 | Data Preparation | Derrick | ✅ Complete |
-| EDA Results | Derrick | 🔄 Needs update |
+| EDA Results | Derrick/Feifei | 🔄 Needs update |
 | Modeling | Sem | 🔄 Needs update |
 | Evaluation Metrics | Sem | 🔄 Needs update |
 | Presentation Slides | All | ⬜ Not started |
