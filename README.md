@@ -17,8 +17,6 @@ regression or a shallow `log1p` Random Forest) generalizes best.
 
 ## 📄 Documentation
 
-The full write-up lives in **[`Analysis/Feifei Notebooks/`](Analysis/Feifei%20Notebooks/)**:
-
 - **[README](Analysis/Feifei%20Notebooks/README.md)** — overview, dataset, how to run, results, team roles
 - **[CRISP-DM_Summary.md](Analysis/Feifei%20Notebooks/CRISP-DM_Summary.md)** — one-page project summary (also as `.docx`)
 
