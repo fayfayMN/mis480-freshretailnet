@@ -118,9 +118,9 @@ assigning owners (per the team's planning email):
 |---|---|---|
 | Dataset Overview | Feifei | ✅ Complete |
 | Data Preparation | Derrick | ✅ Complete |
-| EDA Results | Derrick/Feifei | 🔄 Needs update |
-| Modeling | Sem | 🔄 Needs update |
-| Evaluation Metrics | Sem | 🔄 Needs update |
+| EDA Results | Derrick/Feifei | ✅ Complete |
+| Modeling | Sem | ✅ Complete |
+| Evaluation Metrics | Feifei | ✅ Complete |
 | Presentation Slides | All | ⬜ Not started |
 | Final Report | All | ⬜ Not started |
 
