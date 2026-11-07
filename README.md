@@ -155,9 +155,9 @@ assigning owners (per the team's planning email):
 |---|---|---|
 | Dataset Overview | Feifei | ✅ Complete |
 | Data Preparation | Derrick | ✅ Complete |
-| EDA Results | Derrick / Feifei | 🔄 Needs update |
+| EDA Results | Derrick / Feifei | ✅ Complete |
 | Modeling | Sem | ✅ Notebook in repo |
-| Evaluation Metrics | Sem | ✅ Notebook in repo |
+| Evaluation Metrics | Feifei  | ✅ Notebook in repo |
 | Presentation Slides | All | ⬜ Not started |
 | Final Report | All | ⬜ Not started |
 
