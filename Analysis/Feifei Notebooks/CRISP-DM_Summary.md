@@ -6,8 +6,8 @@
 
 This one-page summary maps the group's data-preparation, exploration, and modeling work
 to the six phases of **CRISP-DM** (Cross-Industry Standard Process for Data Mining).
-Work lives in five notebooks: `01_inspect`, `02_subset`, `03_eda`, `04_modeling`,
-`05_classification`.
+Work lives in six notebooks: `01_inspect`, `02_subset`, `03_eda`, `04_modeling`,
+`05_classification`, `06_modeling_final` (the consolidated, canonical modeling notebook).
 
 ---
 
@@ -56,7 +56,7 @@ next-day sales predictions beyond using past sales alone?* Findings are framed a
   about 50% above weekdays (≈ 1.0–1.1); the 90-day trend is flat. This weekly cycle is
   what the `lag_7` feature captures. (90 days cannot show annual seasonality.)
 
-## Phase 4 — Modeling  *(notebook 04, §1–10)*
+## Phase 4 — Modeling  *(canonical: notebook 06; extra diagnostics in 04)*
 - **Task:** predict next-day `sale_amount` using only information known at forecast time
   — past-sales lags (`lag_1`, `lag_7`, 7-day rolling mean), planned promotion/holiday/
   discount, and **lagged** weather/stockout. Target-day sales, stockout, and weather are
@@ -64,38 +64,38 @@ next-day sales predictions beyond using past sales alone?* Findings are framed a
 - **Design:** chronological train/validation/test split; preprocessing fit on training
   only; numeric target → **Regression Trees + Multiple Linear Regression** (Week 8), not
   classifiers.
-- **Within-sample test results (MAE / RMSE):**
+- **Within-sample test results** (fixed-date split, test Jun 12–25; Random Forest tuned to
+  depth 10 / leaf 20 / 300 trees):
 
-  | Model | MAE | RMSE |
-  |---|---|---|
-  | baseline (previous-week same-day) | 0.554 | 0.859 |
-  | linear regression | 0.480 | 0.706 |
-  | random forest (depth 4) | 0.446 | 0.690 |
-  | random forest, `log1p` target (depth 4) | 0.438 | 0.664 |
+  | Model | MAE | RMSE | WAPE |
+  |---|---|---|---|
+  | baseline (previous-week same-day) | 0.545 | 0.844 | 45.1% |
+  | linear regression | 0.455 | 0.671 | 37.6% |
+  | **random forest** | **0.438** | **0.663** | **36.3%** |
 
-- A **`log1p` transform** cut residual heteroscedasticity (corr of |residual| with
-  prediction 0.53 → 0.24); `max_depth` tuning controlled overfitting (Week 8).
-- **Prediction intervals (Weeks 3–4):** forecasts are reported with 95% intervals
-  (ŷ ± 1.96σ, σ from validation residuals), well-calibrated at ~95% test coverage
-  (0.95 linear, 0.97 random forest).
+  Excluding the 107 long-stockout rows (≥12h out of stock), Random Forest WAPE improves to **32.7%**.
+- **Feature importance (permutation):** recent 7-day sales dominate; holidays and discounts
+  are the top factors beyond past sales; weather adds almost nothing.
+- **Additional diagnostics in `04_modeling`:** a `log1p` transform that cut residual
+  heteroscedasticity (corr of |residual| with prediction 0.53 → 0.24), `max_depth` tuning for
+  overfitting (Week 8), and 95% **prediction intervals** (ŷ ± 1.96σ, ~95% coverage).
 
-## Phase 5 — Evaluation  *(notebook 04, §10)*
+## Phase 5 — Evaluation  *(notebook 06)*
 Scored once on the dataset's **official eval split** — the true next 7 days
 (2024-06-26 → 2024-07-02) for the same 100 series, with lags built across the
 history→future boundary (no leakage).
 
-| Model | MAE | RMSE |
-|---|---|---|
-| baseline (previous-week same-day) | 0.601 | 0.960 |
-| linear regression | 0.488 | **0.748** |
-| random forest (`log1p`, depth 4) | 0.488 | 0.812 |
-| random forest (`log1p`, depth 5) | **0.477** | 0.796 |
+| Model | MAE | RMSE | WAPE |
+|---|---|---|---|
+| baseline (previous-week same-day) | 0.601 | 0.960 | 48.8% |
+| linear regression | 0.491 | **0.749** | 39.9% |
+| **random forest** | **0.475** | 0.788 | 38.6% |
 
 **Verdict:** every model beats the naive baseline on genuinely unseen days, so advance
 information gives a **modest but real** improvement over past sales alone — the answer to
-the research question. The **simple linear model holds up best on RMSE**; the forest's
-within-sample edge did not carry into the true future (out-of-sample is the honest
-judge).
+the research question. On the eval week the **Random Forest has the best MAE (0.475)** and
+**linear the best RMSE (0.749)** — effectively tied, so a simple, interpretable model is
+defensible.
 
 ## Secondary analysis — Classification (Week 12)  *(notebook 05)*
 To exercise the Week 12 classification toolkit, we reframed the task as a yes/no question
@@ -122,6 +122,8 @@ time; monitor MAE/RMSE for drift and retrain on a schedule.
 
 ## Limitations (proposal §4)
 - We predict **observed** sales, not full unmet demand; `est_demand` is a rough proxy.
-- A **90-day** window cannot establish annual seasonality.
+- **The 90-day window is the dataset's full training span, not a sampling choice** —
+  FreshRetailNet-50K provides exactly 90 train + 7 eval days per series (the whole 50,000-series
+  dataset is only 90 days), so weekly but not annual seasonality can be modeled.
 - The **100-series convenience sample** and anonymized ids limit generalization to the
   full chain.

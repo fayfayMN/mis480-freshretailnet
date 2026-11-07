@@ -1,5 +1,7 @@
-# Raw dataset — large / licensed; download from Hugging Face instead (see README)
+# Raw dataset — train.parquet is 101 MB (over GitHub's limit); download from Hugging Face (see README)
 Data/FreshRetailNet-50k/*.parquet
+# ...but keep eval.parquet (~8 MB) so notebook 06's eval-week + forecasting sections run from a clone
+!Data/FreshRetailNet-50k/eval.parquet
 
 # Backups and scratch
 *.bak
