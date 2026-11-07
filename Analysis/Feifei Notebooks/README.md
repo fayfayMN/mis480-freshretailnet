@@ -21,7 +21,7 @@ not causal claims.
 
 **Headline result (official held-out week):** every model beats a previous-week baseline;
 advance information gives a modest but real improvement, and a tuned Random Forest
-generalizes best (canonical numbers from `06_modeling_final`).
+generalizes best (canonical numbers from `04_modeling_and_evaluation`).
 
 | Model | MAE | RMSE |
 |---|---|---|
@@ -63,32 +63,40 @@ MIS480-50 Group Project/
 ├── Data/                              # dataset landing (raw parquet git-ignored; see above)
 │   ├── FreshRetailNet.html            # dataset card
 │   └── Dataset Shortlist.docx         # dataset selection notes
-├── Data Prep - Derrick/               # data preparation, ETL, and notebooks
-│   ├── 01_inspect … 06_modeling_final (.ipynb + .html)   # 06 = canonical team modeling
+├── Data Prep - Derrick/               # data preparation & ETL (the shared data lives here)
 │   ├── scripts/                       # 01_inspect · 02_subset · 03_eda (.py)
 │   ├── data/subset/                   # derived 100-series working subset (CSV + parquet)
 │   └── outputs/                       # data_dictionary, quality_report, charts (eda/, models/)
-└── Analysis/Feifei Notebooks/         # analysis copies + the write-up
-    ├── 01_inspect … 05_classification (.ipynb + .html)
+└── Analysis/Feifei Notebooks/         # the five notebooks + the write-up
+    ├── 01_inspect … 05_classification (.ipynb + .html)   # 04 = modeling & evaluation (canonical)
+    ├── README.md
     └── CRISP-DM_Summary.md / .docx
 ```
 
-Notebooks (run in order): **01** inspect → **02** subset → **03** EDA → **04** modeling →
-**05** classification → **06** modeling (final, consolidated — the canonical modeling result).
+**CRISP-DM lifecycle** (iterative — inspect the raw data, prepare the subset, then explore and model it):
+
+| CRISP-DM phase | Notebook(s) |
+|---|---|
+| 1 · Business Understanding | the proposal + this README (research question) |
+| 2 · Data Understanding | `01_inspect` (raw data) · `03_eda` (explore the prepared subset) |
+| 3 · Data Preparation | `02_subset` (select + build the 100-series subset) |
+| 4 · Modeling | `04_modeling_and_evaluation` · `05_classification` (supplementary Week-12 demo) |
+| 5 · Evaluation | `04_modeling_and_evaluation` (test set + the official eval week) |
+| 6 · Deployment | recommendations + a monitoring plan (in the CRISP-DM summary) |
 
 ---
 
 ## How to run
 
-1. **Environment** (Python 3; conda or venv):
+1. **Environment** (Python 3.10+; conda or venv):
    ```bash
-   pip install pandas numpy scikit-learn matplotlib pyarrow datasets jupyter
+   pip install -r requirements.txt
    ```
 2. **Get the data:** the working subset is already in `Data Prep - Derrick/data/subset/`.
    To rebuild it from scratch, download the dataset (see **Dataset** above) and run the
    `scripts/` in order.
-3. **Run the notebooks** from the folder that contains the `data/` and `outputs/` paths
-   (`Data Prep - Derrick/`), or open the pre-rendered `.html` exports for a quick read.
+3. **Run the notebooks** from any folder — each begins by locating the shared data
+   automatically (no need to `cd` anywhere special), or open the `.html` exports for a quick read.
 
 ---
 
@@ -96,11 +104,11 @@ Notebooks (run in order): **01** inspect → **02** subset → **03** EDA → **
 
 - **EDA:** sales rise with promotions/discounts/holidays; weather is weak; strong **weekly
   seasonality** (weekends ~50% above weekdays); stockout censoring confirmed.
-- **Modeling (canonical: `06_modeling_final`):** next-day forecast with no-leakage features
-  (past-sales lags + planned promo/holiday/discount + lagged weather/stockout); previous-week
-  baseline vs. linear vs. a **tuned Random Forest** (depth 10, leaf 20); reported with
-  MAE/RMSE/WAPE, a long-stockout sensitivity check, and permutation importance. (`04_modeling`
-  holds extra diagnostics — a `log1p` transform and 95% prediction intervals.)
+- **Modeling & Evaluation (`04_modeling_and_evaluation`):** next-day forecast with no-leakage
+  features (past-sales lags + planned promo/holiday/discount + lagged weather/stockout);
+  previous-week baseline vs. linear vs. a **tuned Random Forest** (depth 10, leaf 20); reported
+  with MAE/RMSE/WAPE, a long-stockout sensitivity check, permutation importance, residual/assumption
+  diagnostics, 95% prediction intervals, and a short forecasting view (recursive + Holt-Winters).
 - **Evaluation:** validated on the dataset's **official eval split** (true next 7 days).
 - **Classification (Week 12):** a "high- vs low-demand day" demo — logistic regression and a
   Random Forest classifier reach ~0.79 accuracy, ROC-AUC ~0.87.

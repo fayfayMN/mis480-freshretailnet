@@ -6,8 +6,8 @@
 
 This one-page summary maps the group's data-preparation, exploration, and modeling work
 to the six phases of **CRISP-DM** (Cross-Industry Standard Process for Data Mining).
-Work lives in six notebooks: `01_inspect`, `02_subset`, `03_eda`, `04_modeling`,
-`05_classification`, `06_modeling_final` (the consolidated, canonical modeling notebook).
+Work lives in five notebooks: `01_inspect`, `02_subset`, `03_eda`,
+`04_modeling_and_evaluation` (modeling + evaluation), `05_classification`.
 
 ---
 
@@ -56,7 +56,7 @@ next-day sales predictions beyond using past sales alone?* Findings are framed a
   about 50% above weekdays (≈ 1.0–1.1); the 90-day trend is flat. This weekly cycle is
   what the `lag_7` feature captures. (90 days cannot show annual seasonality.)
 
-## Phase 4 — Modeling  *(canonical: notebook 06; extra diagnostics in 04)*
+## Phase 4 — Modeling  *(notebook 04 — Modeling & Evaluation)*
 - **Task:** predict next-day `sale_amount` using only information known at forecast time
   — past-sales lags (`lag_1`, `lag_7`, 7-day rolling mean), planned promotion/holiday/
   discount, and **lagged** weather/stockout. Target-day sales, stockout, and weather are
@@ -76,11 +76,12 @@ next-day sales predictions beyond using past sales alone?* Findings are framed a
   Excluding the 107 long-stockout rows (≥12h out of stock), Random Forest WAPE improves to **32.7%**.
 - **Feature importance (permutation):** recent 7-day sales dominate; holidays and discounts
   are the top factors beyond past sales; weather adds almost nothing.
-- **Additional diagnostics in `04_modeling`:** a `log1p` transform that cut residual
-  heteroscedasticity (corr of |residual| with prediction 0.53 → 0.24), `max_depth` tuning for
-  overfitting (Week 8), and 95% **prediction intervals** (ŷ ± 1.96σ, ~95% coverage).
+- **Diagnostics (same notebook):** residual/assumption checks (heteroscedasticity corr ≈ 0.52),
+  95% **prediction intervals** (ŷ ± 1.96σ, well-calibrated at ~95% test coverage), and a short
+  forecasting view (recursive multi-step + Holt-Winters). A `log1p` transform was explored
+  (Week 8) but did not change the ranking, so the raw-target model is kept.
 
-## Phase 5 — Evaluation  *(notebook 06)*
+## Phase 5 — Evaluation  *(notebook 04)*
 Scored once on the dataset's **official eval split** — the true next 7 days
 (2024-06-26 → 2024-07-02) for the same 100 series, with lags built across the
 history→future boundary (no leakage).
@@ -97,7 +98,7 @@ the research question. On the eval week the **Random Forest has the best MAE (0.
 **linear the best RMSE (0.749)** — effectively tied, so a simple, interpretable model is
 defensible.
 
-## Secondary analysis — Classification (Week 12)  *(notebook 05)*
+## Secondary analysis — Classification (Week 9)  *(notebook 05)*
 To exercise the Week 12 classification toolkit, we reframed the task as a yes/no question
 — **"will tomorrow be a high-sales day?"** (next-day `sale_amount` above the training
 median) — using the same no-leakage features. Logistic regression and a Random Forest
@@ -114,9 +115,22 @@ Both classifiers clearly beat the baseline (ROC-AUC ≈ 0.87). This is a **secon
 demonstration**: binarizing the target discards information, so the Phase 4 regression
 remains the main forecasting model.
 
-## Phase 6 — Deployment (outline)
-Retrain on all available history; score each day using only information known at forecast
-time; monitor MAE/RMSE for drift and retrain on a schedule.
+## Phase 6 — Deployment & Recommendations
+We do not ship a production system; for this project, deployment means findings-based
+recommendations and an operating plan.
+
+- **Recommendation.** Use the tuned Random Forest (or the simpler linear model) to forecast
+  next-day demand per store-product for inventory and promotion planning — it beats the
+  previous-week baseline by about 20% on both the test set and the official eval week.
+- **How it would run.** Retrain on all history; score each morning using **only information
+  known at forecast time** (past-sales lags + planned promotion/holiday/discount + yesterday's
+  weather and stockout); report each forecast **with its 95% prediction interval** so planners
+  see the uncertainty.
+- **Monitoring & maintenance.** Track MAE / RMSE / WAPE against realized sales; alert if error
+  drifts above the baseline; retrain on a schedule (e.g., monthly) or when drift is detected.
+- **Operational caveats (from our findings).** Forecasts are of **observed** sales (censored by
+  stockouts), so pair them with stockout flags; the **90-day** window has no annual or
+  holiday-season coverage, so re-validate before peak periods.
 
 ---
 

@@ -7802,15 +7802,14 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="05-%E2%80%94-Classification-sub-analysis-(Week-12)">05 — Classification sub-analysis (Week 12)<a class="anchor-link" href="#05-%E2%80%94-Classification-sub-analysis-(Week-12)">¶</a></h1><p>Our main study (notebook 04) predicts a <strong>number</strong> (next-day sales), so it uses
-regression. This short notebook demonstrates the <strong>Week 12 classification</strong> toolkit on
+<h1 id="05-%E2%80%94-Classification-sub-analysis-(Week-9)">05 — Classification sub-analysis (Week 9)<a class="anchor-link" href="#05-%E2%80%94-Classification-sub-analysis-(Week-9)">¶</a></h1><p>Our main study (notebook 04) predicts a <strong>number</strong> (next-day sales), so it uses
+regression. This short notebook demonstrates the <strong>Week 9 classification</strong> toolkit on
 the same data by turning the problem into a yes/no question:</p>
 <blockquote>
 <p><strong>Will tomorrow be a "high-sales" day for this product?</strong>  (high = next-day
 <code>sale_amount</code> above the training-set median)</p>
 </blockquote>
-<p><strong>Classification</strong> (Week 12) assigns each case to a discrete class. We use two Week 12
-algorithms — <strong>Logistic Regression</strong> and a <strong>Random Forest classifier</strong> — against a
+<p><strong>Classification</strong>  assigns each case to a discrete class. We use two algorithms — <strong>Logistic Regression</strong> and a <strong>Random Forest classifier</strong> — against a
 <strong>majority-class baseline</strong>, and we judge them with the <strong>confusion matrix</strong> and the
 metrics built on it:</p>
 <table>
@@ -7856,12 +7855,48 @@ planned promotion/holiday/discount, lagged weather &amp; stockout).</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=272fb680">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=8805222d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># --- run from anywhere: switch to the data-prep folder so relative paths resolve ---</span>
+<span class="c1"># (notebooks live here, but the shared data/subset and Data/ folders are under</span>
+<span class="c1">#  'Data Prep - Derrick'; this makes data/subset/..., ../Data/..., outputs/... all work.)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="n">_cwd</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">_root</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_cwd</span><span class="p">,</span> <span class="o">*</span><span class="n">_cwd</span><span class="o">.</span><span class="n">parents</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="s1">'Data Prep - Derrick'</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">_root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">_root</span> <span class="o">/</span> <span class="s1">'Data Prep - Derrick'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Project data folder located — relative paths ready.'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Project data folder located — relative paths ready.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=272fb680">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -7915,7 +7950,7 @@ influences the class definition.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"store_id"</span><span class="p">,</span> <span class="s2">"product_id"</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -7980,7 +8015,7 @@ train rows 6300, test rows 1200 | test high-day rate: 0.562
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">majority_class</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)</span>
@@ -8011,7 +8046,7 @@ train rows 6300, test rows 1200 | test high-day rate: 0.562
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="3)-Logistic-Regression-(Week-12)">3) Logistic Regression (Week 12)<a class="anchor-link" href="#3)-Logistic-Regression-(Week-12)">¶</a></h2><p>Logistic regression maps a linear combination of predictors to a probability via the
+<h2 id="3)-Logistic-Regression-(Week-9)">3) Logistic Regression (Week 9)<a class="anchor-link" href="#3)-Logistic-Regression-(Week-9)">¶</a></h2><p>Logistic regression maps a linear combination of predictors to a probability via the
 logit function, then thresholds it to a class. Features are standardized (fit on train
 only).</p>
 </div>
@@ -8022,7 +8057,7 @@ only).</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">logit</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">"scaler"</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
@@ -8063,7 +8098,7 @@ only).</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="4)-Random-Forest-classifier-(Week-12-ensemble)">4) Random Forest classifier (Week 12 ensemble)<a class="anchor-link" href="#4)-Random-Forest-classifier-(Week-12-ensemble)">¶</a></h2><p>The same ensemble idea as notebook 04, but voting for a class instead of averaging a
+<h2 id="4)-Random-Forest-classifier-(Week-9-ensemble)">4) Random Forest classifier (Week 9 ensemble)<a class="anchor-link" href="#4)-Random-Forest-classifier-(Week-9-ensemble)">¶</a></h2><p>The same ensemble idea as notebook 04, but voting for a class instead of averaging a
 number.</p>
 </div>
 </div>
@@ -8073,7 +8108,7 @@ number.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">rf_clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
@@ -8123,7 +8158,7 @@ number.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># metrics table</span>
@@ -8209,26 +8244,26 @@ saved outputs/models/09_classification.png
 <li><strong>Both classifiers clearly beat the majority baseline</strong> (accuracy ~0.44), reaching
 about <strong>0.79 accuracy and ROC-AUC ~0.87</strong> — the same advance information that helped
 the regression also separates high- from low-sales days well.</li>
-<li><strong>Reading the confusion matrix (Week 12):</strong> precision ~0.82 means most days we <em>flag</em>
+<li><strong>Reading the confusion matrix (Week 9):</strong> precision ~0.82 means most days we <em>flag</em>
 as high really are high (few false positives / Type I errors); recall ~0.77–0.80
 means we <em>catch</em> most truly-high days (moderate false negatives / Type II errors). For
 inventory, missing a high day (FN) usually costs more than a false alarm (FP), so one
 could lower the decision threshold to raise recall at the expense of precision.</li>
 <li><strong>Logistic vs forest:</strong> essentially tied here; logistic is more interpretable (log-odds
-coefficients), the forest captures interactions — the Week 12 "no single best
+coefficients), the forest captures interactions "no single best
 algorithm" point.</li>
 </ul>
 <p><strong>Why this is a side analysis, not the main model.</strong> Binarizing throws away information
 (a day just above vs far above the median look identical), so for a sales <em>forecast</em> the
 regression in notebook 04 is the right tool. This notebook exists to demonstrate the
-Week 12 classification workflow — confusion matrix, precision/recall, ROC-AUC — on an
+Week 9 classification workflow — confusion matrix, precision/recall, ROC-AUC — on an
 operational "high-demand day" question.</p>
 <p><strong>Limitations</strong> carry over from the main study: observed (not unmet) demand, a 90-day
 window, and a 100-series convenience sample.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=3a976d8f-6db3-41ea-86f7-db28441d81c6">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=5fae531f-52c6-4991-a347-cd9353ae63c1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
