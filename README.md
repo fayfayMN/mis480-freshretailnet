@@ -7,9 +7,7 @@ for **MIS 480-50 Predictive Analytics**, Metropolitan State University, Fall 202
 
 ## 📄 Documentation
 
-The full write-up lives in **[`Analysis/Feifei Notebooks/`](Analysis/Feifei%20Notebooks/)**:
 
-- **[README](Analysis/Feifei%20Notebooks/README.md)** — overview, dataset, how to run, results, team roles
 - **[CRISP-DM_Summary.md](Analysis/Feifei%20Notebooks/CRISP-DM_Summary.md)** — one-page project summary
 
 ## Repository map
