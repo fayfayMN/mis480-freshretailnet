@@ -3,7 +3,7 @@
 Predicting next-day retail sales with the **FreshRetailNet-50K** dataset — a group project
 for **MIS 480-50 Predictive Analytics**, Metropolitan State University, Fall 2026.
 
-**Team:** Paul Ries (project manager) · Feifei Li · Sem Masgina · Derrick Nyagesuka
+**Team:** Paul Ries  · Feifei Li · Sem Masgina · Derrick Nyagesuka
 
 **Headline result (official held-out week):** every model beats a previous-week baseline;
 advance information gives a modest but real improvement, and a simple model (linear
