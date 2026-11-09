@@ -80,6 +80,10 @@ next-day sales predictions beyond using past sales alone?* Findings are framed a
   95% **prediction intervals** (ŷ ± 1.96σ, well-calibrated at ~95% test coverage), and a short
   forecasting view (recursive multi-step + Holt-Winters). A `log1p` transform was explored
   (Week 8) but did not change the ranking, so the raw-target model is kept.
+- **Forecasting check:** a recursive 7-day forecast run across all 100 series beats a
+  hold-last-value persistence baseline (**MAE 0.517 vs 0.589**); on the smooth 100-series
+  aggregate, Holt-Winters and a seasonal-naive "repeat last week" are essentially tied
+  (MAE ≈ 0.10), confirming a weekly but no annual cycle to exploit.
 
 ## Phase 5 — Evaluation  *(notebook 04)*
 Scored once on the dataset's **official eval split** — the true next 7 days
@@ -99,17 +103,18 @@ the research question. On the eval week the **Random Forest has the best MAE (0.
 defensible.
 
 ## Secondary analysis — Classification (Week 9)  *(notebook 05)*
-To exercise the Week 12 classification toolkit, we reframed the task as a yes/no question
+To exercise the Week 9 classification toolkit, we reframed the task as a yes/no question
 — **"will tomorrow be a high-sales day?"** (next-day `sale_amount` above the training
-median) — using the same no-leakage features. Logistic regression and a Random Forest
+median) — using the same no-leakage features and the same fixed-date split as the
+modeling notebook (test = Jun 12–25). Logistic regression and a Random Forest
 classifier were compared against a majority-class baseline and scored with the confusion
 matrix, precision/recall, and ROC-AUC.
 
 | Model | Accuracy | Precision | Recall | ROC-AUC |
 |---|---|---|---|---|
-| majority baseline | 0.438 | — | — | — |
-| logistic regression | 0.788 | 0.819 | 0.799 | 0.869 |
-| random forest | 0.782 | 0.829 | 0.773 | 0.870 |
+| majority baseline | 0.456 | — | — | — |
+| logistic regression | 0.775 | 0.811 | 0.765 | 0.865 |
+| random forest | 0.779 | 0.817 | 0.766 | 0.865 |
 
 Both classifiers clearly beat the baseline (ROC-AUC ≈ 0.87). This is a **secondary
 demonstration**: binarizing the target discards information, so the Phase 4 regression
